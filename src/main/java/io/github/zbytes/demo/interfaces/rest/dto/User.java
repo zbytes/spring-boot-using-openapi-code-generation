@@ -1,17 +1,16 @@
 package io.github.zbytes.demo.interfaces.rest.dto;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.openapitools.jackson.nullable.JsonNullable;
+
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T10:28:17.922+05:45[Asia/Kathmandu]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T11:22:35.830+05:45[Asia/Kathmandu]")
 
 public class User  implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -38,6 +37,8 @@ public class User  implements Serializable {
    * @return username
   */
   @ApiModelProperty(example = "John78", value = "User supplied username")
+
+@Size(min=4) 
   public String getUsername() {
     return username;
   }
@@ -56,6 +57,8 @@ public class User  implements Serializable {
    * @return firstName
   */
   @ApiModelProperty(example = "John", value = "User first name")
+
+@Size(min=1) 
   public String getFirstName() {
     return firstName;
   }
@@ -74,6 +77,8 @@ public class User  implements Serializable {
    * @return lastName
   */
   @ApiModelProperty(example = "Smith", value = "User last name")
+
+@Size(min=1) 
   public String getLastName() {
     return lastName;
   }
@@ -92,6 +97,8 @@ public class User  implements Serializable {
    * @return email
   */
   @ApiModelProperty(example = "john.smith@example.com", value = "User email address")
+
+
   public String getEmail() {
     return email;
   }

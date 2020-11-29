@@ -7,27 +7,16 @@ package io.github.zbytes.demo.interfaces.rest;
 
 import io.github.zbytes.demo.interfaces.rest.dto.User;
 import io.swagger.annotations.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T10:28:17.922+05:45[Asia/Kathmandu]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T11:22:35.830+05:45[Asia/Kathmandu]")
 
+@Validated
 @Api(value = "User", description = "the User API")
 public interface UserApi {
 
@@ -48,9 +37,9 @@ public interface UserApi {
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Invalid user supplied") })
     @RequestMapping(value = "/users",
-        consumes = "application/json",
+        consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    Mono<ResponseEntity<Void>> createUser(@ApiParam(value = "Created user object" ,required=true )   @RequestBody Mono<User> user, ServerWebExchange exchange);
+    ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User user);
 
 
     /**
@@ -71,7 +60,7 @@ public interface UserApi {
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/users/{username}",
         method = RequestMethod.DELETE)
-    Mono<ResponseEntity<Void>> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("username") String username, ServerWebExchange exchange);
+    ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("username") String username);
 
 
     /**
@@ -95,9 +84,9 @@ public interface UserApi {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/users/{username}",
-        produces = "application/json", 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
-    Mono<ResponseEntity<User>> getUserByName(@ApiParam(value = "The name that needs to be fetched",required=true) @PathVariable("username") String username,@ApiParam(value = "Filter users without email")  @RequestParam(value = "with_email", required = false) Boolean withEmail, ServerWebExchange exchange);
+    ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched",required=true) @PathVariable("username") String username,@ApiParam(value = "Filter users without email") @Valid @RequestParam(value = "with_email", required = false) Boolean withEmail);
 
 
     /**
@@ -120,9 +109,9 @@ public interface UserApi {
         @ApiResponse(code = 200, message = "Success", response = User.class, responseContainer = "List"),
         @ApiResponse(code = 403, message = "Forbidden") })
     @RequestMapping(value = "/users",
-        produces = "application/json", 
+        produces = { "application/json" }, 
         method = RequestMethod.GET)
-    Mono<ResponseEntity<Flux<User>>> getUsers(@ApiParam(value = "The page that needs to be fetched", required = true)  @RequestParam(value = "page", required = true) Integer page,@ApiParam(value = "The size that needs to be fetched", required = true)  @RequestParam(value = "size", required = true) Integer size,@ApiParam(value = "The sort that needs to be fetched")  @RequestParam(value = "sort", required = false) String sort, ServerWebExchange exchange);
+    ResponseEntity<List<User>> getUsers(@NotNull @ApiParam(value = "The page that needs to be fetched", required = true) @Valid @RequestParam(value = "page", required = true) Integer page,@NotNull @ApiParam(value = "The size that needs to be fetched", required = true) @Valid @RequestParam(value = "size", required = true) Integer size,@ApiParam(value = "The sort that needs to be fetched") @Valid @RequestParam(value = "sort", required = false) String sort);
 
 
     /**
@@ -147,8 +136,8 @@ public interface UserApi {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/users/{username}",
-        consumes = "application/json",
+        consumes = { "application/json", "application/xml" },
         method = RequestMethod.PUT)
-    Mono<ResponseEntity<Void>> updateUser(@ApiParam(value = "Updated user object" ,required=true )   @RequestBody Mono<User> user,@ApiParam(value = "The name that needs to be updated",required=true) @PathVariable("username") String username, ServerWebExchange exchange);
+    ResponseEntity<Void> updateUser(@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User user,@ApiParam(value = "The name that needs to be updated",required=true) @PathVariable("username") String username);
 
 }

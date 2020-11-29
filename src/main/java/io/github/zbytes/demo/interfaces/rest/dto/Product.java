@@ -1,23 +1,45 @@
 package io.github.zbytes.demo.interfaces.rest.dto;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.openapitools.jackson.nullable.JsonNullable;
+
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Product
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T10:28:17.922+05:45[Asia/Kathmandu]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-11-29T11:22:35.830+05:45[Asia/Kathmandu]")
 
 public class Product  implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  @JsonProperty("productId")
+  private String productId;
+
   @JsonProperty("productName")
   private String productName;
+
+  public Product productId(String productId) {
+    this.productId = productId;
+    return this;
+  }
+
+  /**
+   * Product identifier
+   * @return productId
+  */
+  @ApiModelProperty(example = "X0Q01", value = "Product identifier")
+
+@Size(min=5,max=5) 
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
+  }
 
   public Product productName(String productName) {
     this.productName = productName;
@@ -29,6 +51,8 @@ public class Product  implements Serializable {
    * @return productName
   */
   @ApiModelProperty(example = "Apple", value = "Product name")
+
+@Size(min=4) 
   public String getProductName() {
     return productName;
   }
@@ -47,12 +71,13 @@ public class Product  implements Serializable {
       return false;
     }
     Product product = (Product) o;
-    return Objects.equals(this.productName, product.productName);
+    return Objects.equals(this.productId, product.productId) &&
+        Objects.equals(this.productName, product.productName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(productName);
+    return Objects.hash(productId, productName);
   }
 
   @Override
@@ -60,6 +85,7 @@ public class Product  implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class Product {\n");
     
+    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("    productName: ").append(toIndentedString(productName)).append("\n");
     sb.append("}");
     return sb.toString();
